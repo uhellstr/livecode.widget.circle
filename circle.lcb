@@ -1,0 +1,142 @@
+/*
+Copyright (C) 2014-2015 LiveCode Ltd.
+
+This file is part of LiveCode.
+
+LiveCode is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License v3 as published by the Free
+Software Foundation.
+
+LiveCode is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License
+along with LiveCode.  If not see <http://www.gnu.org/licenses/>.  */
+
+widget community.livecode.ulf.circle
+
+use com.livecode.canvas
+
+metadata title is "Circle"
+metadata author is "Ulf Hellstrom"
+metadata version is "1.0.0"
+
+metadata circleColor.options is "black,white,red,lime,blue,yellow,cyan,violet,silver,gray,maroon,olive,green,purple,teal,navy"
+metadata circleColor.default is "black"
+
+property circleMargin get mMargin set setMargin
+property circleColor  get mColor  set setColor
+
+private variable mMargin as Real
+private variable mColor as String
+private variable mCircleColor as String
+private variable mBackgroundPaint as Paint
+
+public handler onCreate()
+	put 0 into mMargin
+	put "black" into mColor
+end handler
+
+public handler OnPaint()
+   // Create a path with a radius of half the width of the canvas
+   // Fill the path
+   variable tCirclePath as Path
+   put circle path centered at point [my width / 2, my height / 2] with radius ((my width - mMargin)/2) into tCirclePath
+   setCircleColor("yellow")
+   fill tCirclePath on this canvas
+end handler
+
+public handler OnSave(out rProperties as Array)
+	put the empty array into rProperties
+	put mColor into rProperties["circleColor"]
+end handler
+
+public handler OnLoad(in pProperties as Array)
+	put pProperties["CircleColor"] into mColor
+end handler
+
+public handler setMargin(in pMargin as Real)
+	put pMargin into mMargin
+	redraw all
+end handler
+
+public handler setColor(in pColor as String)
+   put pColor into mColor
+   redraw all
+end handler
+
+// *****************************************************************************
+private handler setCircleColor(in pColor as String)
+    // colors in RGBA (RGB with AlphaChannel)
+	 // Example blue in RGB 0,0,128 is 0,0,127/255 + ,1 for full alpha channel
+	 // White is RGB 255,255,255 Just Replace 255 with 1 so 1,1,1 + ,1 for full Alpha channel
+    if pColor is "black" then
+      set the paint of this canvas to solid paint with color[0,0,0,1]
+      put solid paint with color [0,0,0] into mBackgroundPaint
+    end if
+    if pColor is "white" then
+      set the paint of this canvas to solid paint with color[1,1,1,1]
+      put solid paint with color[1,1,1,1] into mBackgroundPaint
+    end if
+    if pColor is "red" then
+      set the paint of this canvas to solid paint with color[1,0,0,1]
+		put solid paint with color[1,0,0,1] into mBackgroundPaint
+    end if
+    if pColor is "lime" then
+      set the paint of this canvas to solid paint with color[0,1,0,1]
+		put solid paint with color[0,1,0,1] into mBackgroundPaint
+    end if
+    if pColor is "blue" then
+      set the paint of this canvas to solid paint with color[0,0,128/255,1]
+		put solid paint with color[0,0,128/255,1] into mBackgroundPaint
+    end if
+    if pColor is "yellow" then
+      set the paint of this canvas to solid paint with color[1,1,0,1]
+		put solid paint with color[1,1,0,1] into mBackgroundPaint
+    end if
+    if pColor is "cyan" then
+      set the paint of this canvas to solid paint with color[0,1,1,1]
+		put solid paint with color[0,1,1,1] into mBackgroundPaint
+    end if
+    if pColor is "violet" then
+      set the paint of this canvas to solid paint with color[1,0,1,1]
+		put solid paint with color[1,0,1,1] into mBackgroundPaint
+    end if
+    if pColor is "silver" then
+      set the paint of this canvas to solid paint with color[192/255,192/255,192/255,1]
+		put solid paint with color[192/255,192/255,192/255,1] into mBackgroundPaint
+    end if
+    if pColor is "gray" then
+      set the paint of this canvas to solid paint with color[128/255,128/255,128/255,1]
+		put solid paint with color[128/255,128/255,128/255,1] into mBackgroundPaint
+    end if
+    if pColor is "maroon" then
+      set the paint of this canvas to solid paint with color[128/255,0,0,1]
+		put solid paint with color[128/255,0,0,1] into mBackgroundPaint
+    end if
+    if pColor is "olive" then
+      set the paint of this canvas to solid paint with color[128/255,128/255,0,1]
+		put solid paint with color[128/255,128/255,0,1] into mBackgroundPaint
+    end if
+    if pColor is "green" then
+      set the paint of this canvas to solid paint with color[0,128/255,0,1]
+		put solid paint with color[0,128/255,0,1] into mBackgroundPaint
+    end if
+    if pColor is "purple" then
+      set the paint of this canvas to solid paint with color[128/255,0,128/255,1]
+		put solid paint with color[128/255,0,128/255,1] into mBackgroundPaint
+    end if
+    if pColor is "teal" then
+      set the paint of this canvas to solid paint with color[0,128/255,128/255,1]
+		put solid paint with color[0,128/255,128/255,1] into mBackgroundPaint
+    end if
+    if pColor is "navy" then
+      set the paint of this canvas to solid paint with color[0,0,128/255,1]
+		put solid paint with color[0,0,128/255,1] into mBackgroundPaint
+    end if
+	 put pColor into mColor
+end handler
+
+end widget
